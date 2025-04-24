@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import HomePage from './pages/HomePage';
 import BrowsePage from './pages/BrowsePage';
 import CategoryPage from './pages/CategoryPage';
+import RoadmapPage from './pages/RoadmapPage';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -14,8 +15,23 @@ import AdminCategories from './pages/admin/AdminCategories';
 import AdminReports from './pages/admin/AdminReports';
 import AdminSettings from './pages/admin/AdminSettings';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
+import LoadingScreen from './components/ui/LoadingScreen';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <Router>
       <Routes>
@@ -50,6 +66,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/browse" element={<BrowsePage />} />
                   <Route path="/browse/:category" element={<CategoryPage />} />
+                  <Route path="/roadmaps" element={<RoadmapPage />} />
                 </Routes>
               </main>
               <Footer />
