@@ -43,7 +43,7 @@ const Navbar = () => {
                 onClick={() => setIsAuthModalOpen(true)}
                 className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105"
               >
-                Join Aura TechHub
+                Login/Signup
               </button>
             </div>
 
