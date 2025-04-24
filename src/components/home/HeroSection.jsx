@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 const FloatingTechElement = ({ icon, initialX, initialY, duration, delay, size = 24 }) => {
   return (
     <motion.div
-      className="absolute text-blue-300 opacity-40"
+      className="absolute text-blue-300/60"
       initial={{ x: initialX, y: initialY }}
       animate={{
         y: [initialY, initialY + 20, initialY],
@@ -180,14 +180,30 @@ const HeroSection = () => {
   const orbs = Array.from({ length: 5 }).map((_, i) => ({
     id: i,
     size: Math.random() * 200 + 100,
-    color: i % 2 === 0 ? '#93c5fd' : '#bfdbfe',
+    color: i % 2 === 0 ? '#60a5fa' : '#93c5fd',
     left: `${Math.random() * 80 + 10}%`,
     top: `${Math.random() * 80 + 10}%`,
     delay: Math.random() * 3
   }));
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 pb-32">
+    <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 pb-32">
+      {/* Animated grid background */}
+      <div className="absolute inset-0 opacity-20">
+        {[...Array(10)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute top-0 left-0 w-full h-full"
+            style={{
+              backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)',
+              backgroundSize: '40px 40px',
+              animation: `moveGrid 15s linear infinite`,
+              animationDelay: `${i * 1}s`
+            }}
+          />
+        ))}
+      </div>
+
       {/* Floating tech elements */}
       {techIcons.map((tech, index) => (
         <FloatingTechElement
@@ -209,29 +225,6 @@ const HeroSection = () => {
       {orbs.map(orb => (
         <GlowingOrb key={orb.id} {...orb} />
       ))}
-
-      {/* Tech pattern background */}
-      <div className="absolute inset-0 opacity-10">
-        <svg
-          className="absolute w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,0 L100,0 L100,100 L0,100 Z"
-            fill="none"
-            stroke="white"
-            strokeWidth="0.5"
-            strokeDasharray="2 2"
-          />
-          <circle cx="20" cy="20" r="1" fill="white" />
-          <circle cx="50" cy="50" r="1" fill="white" />
-          <circle cx="80" cy="30" r="1" fill="white" />
-          <circle cx="30" cy="70" r="1" fill="white" />
-          <circle cx="70" cy="80" r="1" fill="white" />
-        </svg>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
